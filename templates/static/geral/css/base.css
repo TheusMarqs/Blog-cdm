@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.icons {
+    font-size: 25px;
+    width: 25px !important;
+}
+
+input {
+    margin-bottom: 20px !important;
+}
+
+.navBtn {
+    color: black;
+    text-decoration: none;
+    position: relative;
+    font-family: 'PT Serif', serif;
+    font-size: 20px !important;
+}
+
+@media (max-width: 990px) {
+    #desktop-profile {
+        display: none;
+    }
+    #mobile-profile {
+        display: block;
+    }
+    .navBtn:hover {
+        opacity: 70%;
+    }
+}
+
+@media (min-width: 991px) {
+    #mobile-profile {
+        display: none;
+    }
+    .navBtn::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: cornflowerblue;
+        transform: scaleX(0);
+        transform-origin: bottom left;
+        transition: transform 0.3s ease-in-out;
+    }
+    .navBtn:hover::before {
+        transform: scaleX(1);
+    }
+}
+
+select {
+    margin-bottom: 20px !important;
+}
+
+.no-focus {
+    box-shadow: none !important;
+    border: 1px solid rgb(180, 180, 180) !important;
+}
+
+.subtitle {
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 25px !important;
+}
+
+@media (min-width: 1300px) {
+    #contato {
+        margin-right: 150px !important;
+    }
+}
+
+@media (max-width: 1299px) {
+    #contato {
+        margin-right: 120px !important;
+    }
+}
+
+textarea {
+    margin-bottom: 20px !important;
+}
+
+.cardimg {
+    width: 100px !important;
+    display: block;
+}
+
+.socialMedia {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.linkIcons {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.texto {
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ver-mais {
+    display: none !important;
+}

@@ -1,0 +1,20 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+{% block 'head' %}
+{% endblock %}
+{% block 'body' %}
+<div class="container-fluid" style="background-color: whitesmoke;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-4 mt-5">
+            {% for texto in textos %}
+                <p class="texto">
+                    {{ texto.texto | title }}
+                </p>
+            {% endfor %}
+            <a href="{% url 'home' %}">
+                <button class="btn btn-secondary">Voltar</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
