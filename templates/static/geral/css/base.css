@@ -4,7 +4,7 @@
 }
 
 .icons {
-    font-size: 25px;
+    font-size: 25px !important;
     width: 25px !important;
 }
 
@@ -21,6 +21,9 @@ input {
 }
 
 @media (max-width: 990px) {
+    .desktop-title {
+        display: none !important;
+    }
     #desktop-profile {
         display: none;
     }
@@ -30,9 +33,20 @@ input {
     .navBtn:hover {
         opacity: 70%;
     }
+    .logo {
+        width: 40px;
+    }
 }
 
 @media (min-width: 991px) {
+    .mobile-title {
+        display: none !important;
+    }
+    .logo {
+        width: 60px !important;
+        position: absolute;
+        top: 5px;
+    }
     #mobile-profile {
         display: none;
     }
@@ -69,13 +83,13 @@ select {
 
 @media (min-width: 1300px) {
     #contato {
-        margin-right: 150px !important;
+        margin-right: 30vh !important;
     }
 }
 
 @media (max-width: 1299px) {
     #contato {
-        margin-right: 120px !important;
+        margin-right: 3vh !important;
     }
 }
 
@@ -85,6 +99,7 @@ textarea {
 
 .cardimg {
     width: 100px !important;
+    height: 100px !important;
     display: block;
 }
 
@@ -104,4 +119,19 @@ textarea {
 
 .ver-mais {
     display: none !important;
+}
+
+.sidebar {
+    width: 360px;
+    height: 100% !important;
+}
+
+.rodape {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    top: auto;
+    background-color: whitesmoke;
+    z-index: 999;
+    box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }

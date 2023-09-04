@@ -1,28 +1,55 @@
 {% extends 'bases/base.html' %} {% load static %} {% load crispy_forms_tags %} {% block 'head' %} {% endblock %} {% block 'body' %}
-<div class="pb-4" style="background-color: whitesmoke;">
-    <div class="container">
-        <div class="display-6 text-center pb-5 pt-4">
-            Crônicas mais recentes...
+<div class="pb-4 d-flex" style="background-color: whitesmoke;">
+    <div class="sidebar shadow-sm ms-5 mt-5 rounded-2" style="background-color: rgb(105, 188, 255);">
+        <div class="display-6 text-center mt-3">
+            Serviços
+        </div>
+        <h4 class="text-center mt-5 pb-2">
+            Mensagens personalizadas de aniversário!
+        </h4>
+        <div class="d-flex">
+            <img class="rounded-2 ms-2" src="{% static 'img/aniversario.png' %}" style="width: 140px;">
+            <p class="text-black ms-2 me-1 mt-4" style="font-family: 'Montserrat', sans-serif;">Muito além de um parabéns!</p>
         </div>
 
-        {% for texto in textos|slice:":9" %} {% if forloop.counter0|divisibleby:3 %}
+        <h4 class="text-center mt-5 pb-2">
+            Votos de casamento
+        </h4>
+        <div class="d-flex pb-5">
+            <img class="rounded-2 ms-2" src="{% static 'img/votos.jpg' %}" style="width: 140px;">
+            <p class="text-black ms-2 me-1 mt-4" style="font-family: 'Montserrat', sans-serif;">Te ajudo a transformar sentimentos em palavras!</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1 me-5"></div>
+            <div class="col-md-9">
+                <div class="display-6 pb-5 pt-5">
+                    Crônicas mais recentes...
+                </div>
+            </div>
+        </div>
+
+        {% for texto in textos|slice:":6" %} {% if forloop.counter0|divisibleby:2 %}
         <div class="row justify-content-start ps-5">
             {% endif %}
 
-            <div class="col-md-4">
-                <div class="card mb-3" style="width: 18rem;">
+            <div class="col-md-6 ms-2 me-2" style="width: 18rem">
+                <div class="card mb-3 shadow-sm pt-2 pb-2" style="width: 18rem;">
                     <img src="media/{{ texto.imagem }}" class="card-img-top cardimg m-auto" alt="...">
 
                     <div class="card-body">
                         <h5 class="card-title">{{texto.titulo | title}}</h5>
                         <div class="row">
                             <div class="text-start">
+                                {% if grupo == 'admin' %}
                                 <a href="{% url 'update_texto' texto.pk %}" class="linkIcons">
                                     <ion-icon class="icons" name="create-outline"></ion-icon>
                                 </a>
                                 <a href="#" class="linkIcons" data-bs-toggle="modal" data-bs-target="#exampleModal{{texto.pk}}">
                                     <ion-icon class="icons" name="trash-outline"></ion-icon>
                                 </a>
+
                                 <div class="modal fade" id="exampleModal{{texto.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
                                     <div class="modal-dialog">
@@ -43,6 +70,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                {% endif %}
                                 <a href="{% url 'exibir_texto' texto.id %}" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" style="float: right;">Ver mais...</a>
                             </div>
                         </div>
@@ -50,22 +78,23 @@
                 </div>
             </div>
 
-            {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
+            {% if forloop.counter0|add:1|divisibleby:2 or forloop.last %}
         </div>
         {% endif %} {% empty %}
         <h4 class="text-center pb-5">Nenhum campo registrado, volte novamente mais tarde!</h4>
-        {% endfor %} {% for texto in textos|slice:"9:" %} {% if forloop.counter0|divisibleby:3 %}
+        {% endfor %} {% for texto in textos|slice:"6:" %} {% if forloop.counter0|divisibleby:2 %}
         <div class="row justify-content-start ps-5 ver-mais">
             {% endif %}
 
-            <div class="col-md-4 justify-content-center">
-                <div class="card mb-3" style="width: 18rem;">
-                    <img src="media/{{ texto.imagem }}" class="card-img-top cardimg m-auto" alt="...">
+            <div class="col-md-6 ms-2 me-2" style="width: 18rem">
+                <div class="card mb-3 pb-2 pt-2" style="width: 18rem;">
+                    <img src="media/{{ texto.imagem }}" class="card-img-top cardimg m-auto">
 
                     <div class="card-body">
                         <h5 class="card-title">{{ texto.titulo | title }}</h5>
                         <div class="row">
                             <div class="text-start">
+                                {% if grupo == 'admin' %}
                                 <a href="{% url 'update_texto' texto.pk %}" class="linkIcons">
                                     <ion-icon class="icons" name="create-outline"></ion-icon>
                                 </a>
@@ -92,6 +121,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                {% endif %}
                                 <a href="{% url 'exibir_texto' texto.id %}" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" style="float: right;">Ver mais...</a>
                             </div>
                         </div>
@@ -99,17 +129,15 @@
                 </div>
             </div>
 
-            {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
+            {% if forloop.counter0|add:1|divisibleby:2 or forloop.last %}
         </div>
         {% endif %} {% endfor %}
 
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <button class="btn btn-secondary w-100 mt-3" id="btn-ver-mais">Carregar mais</button>
+        <div class="row">
+            <div class="col-md-5 ms-sm-5 m-md-auto">
+                <button class="btn btn-secondary mt-3 mb-5" id="btn-ver-mais">Carregar mais</button>
             </div>
         </div>
-
-
 
     </div>
 </div>

@@ -7,7 +7,8 @@ from django.contrib.messages import constants
 from .models import Texto
 from .forms import TextoForm
 
-class TextoCreate(CreateView):
+class TextoCreate(GroupRequiredMixin, CreateView):
+    group_required = u"admin"
     model = Texto
     form_class = TextoForm
     template_name = 'cadastrar_texto.html'
@@ -20,7 +21,8 @@ class TextoCreate(CreateView):
 
         return context
 
-class TextoUpdate(UpdateView):
+class TextoUpdate(GroupRequiredMixin, UpdateView):
+    group_required = u"admin"
     model = Texto
     fields = ['titulo', 'texto', 'dataCriacao', 'imagem']
     template_name = 'cadastrar_texto.html'
@@ -33,10 +35,12 @@ class TextoUpdate(UpdateView):
 
         return context
 
-class TextoDelete(DeleteView):
+class TextoDelete(GroupRequiredMixin, DeleteView):
+    group_required = u"admin"
     model = Texto
     template_name = 'home.html'
     success_url = reverse_lazy('home')
+
 
 def exibir_texto(request, id):
     textos = Texto.objects.filter(id=id)

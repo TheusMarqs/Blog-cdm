@@ -22,10 +22,19 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
+            <div class="row">
+                <div class="col-md-5"></div>
+                <div class="col-md-4">
+                    <a class="navbar-brand ps-5" href="{% url 'home' %}">
+                        <img class="rounded-circle logo" src="{% static 'img/logo.jpg' %}">
+                    </a>
+                </div>
+            </div>
+            <a class="nav-link active subtitle mobile-title" aria-current="page" href="{% url 'home' %}">Coisas de mim</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav ">
                     <li class="nav-item me-5 mt-1">
@@ -33,56 +42,69 @@
                     </li>
 
                     <li class="nav-item me-5">
-                        <a class="nav-link active subtitle" aria-current="page" href="{% url 'home' %}">Coisas de mim</a>
+                        <a class="nav-link active subtitle desktop-title" aria-current="page" href="{% url 'home' %}">Coisas de mim</a>
                     </li>
 
                     <li class="nav-item mt-1">
-                        <a id="contato" class="nav-link active navBtn scroll" aria-current="page" href="#">Contato</a>
+                        <a id="contato" class="nav-link active navBtn scroll" aria-current="page" style="cursor: pointer;">Contato</a>
                     </li>
 
-                    <a class="nav-link active mt-1 me-1 ms-5" aria-current="page" href="#">
+                    <a class="nav-link active mt-1 me-1" aria-current="page" href="https://www.instagram.com/coisasdemim.cronicas/" target="_blank">
                         <img class="icons" src="{% static 'img/instagram.png' %}">
                     </a>
 
-                    <a class="nav-link active mt-1 me-3" aria-current="page" href="#">
+                    <a class="nav-link active mt-1 me-1" aria-current="page" href="https://www.facebook.com/profile.php?id=100079190852967" target="_blank">
                         <img src="{% static 'img/facebook.png' %}" style="width: 28px">
                     </a>
 
-                </ul>
+                    <a class="nav-link active mt-1 me-3" aria-current="page" href="#">
+                        <img src="{% static 'img/pinterest.png' %}" style="width: 28px;">
+                    </a>
 
-                <a class="navBtn me-3" aria-current="page" href="#">Log in</a>
+
+                </ul>
+                {% if not user.is_authenticated %}
+                <a class="navBtn me-3" aria-current="page" href="{% url 'login' %}">Log in</a> {% else %}
                 <div id="desktop-profile">
                     <div class="btn-group dropstart">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <ion-icon class="icons" style="margin-bottom: -5px;" name="person-circle-outline"></ion-icon>
+                    {% if user.is_authenticated %}
+                        {{ request.user|title }}
+                    {% endif %}
                     </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'home' %}">Meu perfil</a></li>
+                            {% if grupo == 'admin' %}
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'cadastrar_texto' %}">
+                                    <ion-icon class="icons me-1" style="margin-bottom: -5px; margin-left: -2px;" name="pencil-outline"></ion-icon>Escrever</a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'alterar_senha' %}">
                                     <ion-icon class="icons me-1" style="margin-bottom: -5px; margin-left: -2px;" name="lock-closed-outline"></ion-icon>Alterar senha</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'logout' %}">
                                     <ion-icon class="icons me-1" style="margin-bottom: -5px;" name="exit-outline"></ion-icon>Sair</a>
                             </li>
                         </ul>
                     </div>
                 </div>
+                {% endif %}
 
             </div>
 
         </div>
     </nav>
 
-
     {% block 'body' %}{% endblock %} {% block 'rodape' %}
-    <div class="container-fluid bg-white pb-3 pt-3 shadow">
-        <div class="row divContato">
+    <div class="container-fluid bg-white pb-3 pt-3 rodape" style="z-index: 100; position: relative; bottom: 0;">
+        <div id="divContato" class="row">
             <div class="col-md-4 align-self-end mb-3 ms-3">
-                <div class="display-6 text-center mb-3">
-                    Contato
-                </div>
+                <h4 class="text-center mb-3">
+                    Quer fazer contato comigo? Me envie uma mensagem!
+                </h4>
                 <form action="https://formspree.io/f/xleybzwd" method="post">
                     <input class="form-control" type="email" name="email" placeholder="Seu e-mail">
                     <textarea class="form-control" name="message" placeholder="Sua mensagem" rows="4" style="resize: none;"></textarea>
@@ -93,23 +115,29 @@
 
                 </form>
             </div>
-            <div class="col-md-3 align-self-end mb-4 ms-4">
+            <div class="col-md-4 align-self-end mb-4 ms-2">
+
                 <div class="d-flex">
                     <img class="icons" src="{% static 'img/instagram.png' %}">
                     <span class="socialMedia ms-2">@cronicas.coisasdemim</span>
                 </div>
-                <div class="d-flex mt-2">
-                    <img src="{% static 'img/facebook.png' %}" style="width: 28px;">
-                    <span class="socialMedia ms-2">faifoaekf</span>
-                </div>
 
                 <div class="d-flex mt-2">
                     <ion-icon name="mail" class="icons"></ion-icon>
-                    <span class="socialMedia ms-2">faifoaekf</span>
+                    <span class="socialMedia ms-2">cronicas.coisasdemim@gmail.com</span>
+                </div>
+                <div class="d-flex mt-2">
+                    <img src="{% static 'img/facebook.png' %}" style="width: 28px;">
+                    <span class="socialMedia ms-2">Cronicas.Coisasdemim</span>
                 </div>
 
+
+
             </div>
-            <div class="col-md-4 align-self-end align">
+            <div class="col-md-3 align-self-end">
+                <div class="m-auto mb-5" style="width: 150px;">
+                    <img class="m-auto rounded-3" src="{% static 'img/logo.jpg' %}" style="width: 150px;">
+                </div>
                 <p>©2023 Crônicas coisas de mim todos direitos reservados</p>
             </div>
         </div>
@@ -118,6 +146,21 @@
 
 
     <script>
+        var scrollToBottomBtn = document.getElementById("contato");
+
+        // Quando o botão for clicado, role até a div de contato
+        scrollToBottomBtn.addEventListener("click", function() {
+            // Obtenha a referência à div de contato pelo seu id
+            var contatoDiv = document.getElementById("divContato");
+
+            if (contatoDiv) {
+                // Rola suavemente até a div de contato
+                contatoDiv.scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
+        });
+
         window.onbeforeunload = () => {
             for (const form of document.getElementsByTagName('form')) {
                 form.reset();
@@ -129,7 +172,7 @@
             cronicasRestantes.forEach(function(card) {
                 card.style.display = "block";
             });
-            document.querySelector(".ver-mais").classList.remove("ver-mais"); // Remover a classe oculta
+            document.querySelector(".ver-mais").classList.remove("ver-mais");
             this.style.display = "none";
         });
     </script>
